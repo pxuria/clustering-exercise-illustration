@@ -11,15 +11,16 @@ file_path = './dataset/winequality-red.csv'  # Replace with your CSV file path
 data = pd.read_csv(file_path, sep=";")
 
 # Step 2: Data Preprocessing
-# Assuming that the dataset has numerical values and no categorical columns that need encoding
-X = data.values  # Extract the feature values (assuming no target column)
+# Extract features, assuming no categorical data or target column
+X = data.values
 
-# Normalize features for clustering
+# Normalize features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 # Step 3: Apply KMeans Clustering
-kmeans = KMeans(n_clusters=3, random_state=42)  # You can adjust n_clusters based on your dataset
+n_clusters = 3  # You can modify this value
+kmeans = KMeans(n_clusters=n_clusters, random_state=42)
 kmeans_labels = kmeans.fit_predict(X_scaled)
 
 # Step 4: Evaluate Clustering
@@ -39,7 +40,7 @@ def evaluate_clustering(data, labels, method_name):
 evaluate_clustering(X_scaled, kmeans_labels, "KMeans")
 
 # Step 5: Visualize KMeans Clustering
-plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=kmeans_labels, cmap='viridis')
+plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=kmeans_labels, cmap='viridis', alpha=0.7)
 plt.title("KMeans Clustering")
 plt.xlabel("Feature 1")
 plt.ylabel("Feature 2")
